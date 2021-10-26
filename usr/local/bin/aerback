@@ -24,6 +24,16 @@ check_files() {
 }
 
 # arguments:
+#   ...filename - one or more name(s) of a file or a folder to check for existence.
+check_file_or_folder() {
+  for filename in "$@"; do
+    if ! test -f "${filename}" -o -d "${filename}" ; then
+      err "The file or folder '${filename}' does not exist!"
+    fi
+  done
+}
+
+# arguments:
 #   remote - the rclone remote name (eg. "backup").
 #   path   - the path of a file or folder to backup.
 backup() {
@@ -31,7 +41,7 @@ backup() {
   rel_path=$(realpath -s --relative-to "/" "${src_path}")
   dst_path="$1:${rel_path}.tar.gz.age"
 
-  check_files "${src_path}"
+  check_file_or_folder "${src_path}"
 
   log "Backing up '${src_path}' to '${dst_path}'."
 
