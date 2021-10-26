@@ -47,7 +47,7 @@ backup() {
 
   tar -C / -chz "${rel_path}" \
     | age -R "${AERBACK_RECIPIENTS}" \
-    | rclone rcat "${remote}:${dst_path}"
+    | rclone rcat "${dst_path}"
 }
 
 # globals:
