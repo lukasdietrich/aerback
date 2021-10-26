@@ -33,6 +33,9 @@ check_file_or_folder() {
   done
 }
 
+# globals:
+#   AERBACK_RECIPIENTS - Filename of the age public keys (eg. "recipients.txt").
+# 
 # arguments:
 #   remote - the rclone remote name (eg. "backup").
 #   path   - the path of a file or folder to backup.
@@ -60,7 +63,7 @@ main() {
   remote="$(< "${AERBACK_REMOTE}")"
 
   if [[ -z ${remote} ]]; then
-  	  err "No remote configured!"
+    err "No remote configured!"
   fi
 
   while read path_line; do
