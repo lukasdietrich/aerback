@@ -12,7 +12,8 @@ remote storage of your choice.
 - [tar][tar]
 - [age][age]
 - [rclone][rclone]
-- [systemd][systemd] (\*)
+- [systemd][systemd] (\* for scheduled backups)
+- [make][make] (\* for the installation)
 
 (\*): Optional
 
@@ -75,3 +76,4 @@ systemctl edit aerback.timer
 [systemd]: https://manpages.ubuntu.com/manpages/bionic/man1/systemd.1.html
 [systemd.timer]: https://manpages.ubuntu.com/manpages/bionic/man5/systemd.timer.5.html
 [systemd.service]: https://manpages.ubuntu.com/manpages/bionic/man5/systemd.service.5.html
+[make]: https://manpages.ubuntu.com/manpages/bionic/man1/make.1.html
