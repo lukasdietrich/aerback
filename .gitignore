@@ -2,6 +2,7 @@
 !*/
 
 !.gitignore
+!.editorconfig
 !README.md
 !LICENSE
 !Makefile

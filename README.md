@@ -1,11 +1,12 @@
 # aerback - *a*ge *e*ncrypted *r*clone *back*ups
 
-This repository provides a small bash script to encrypt files and folders and back them up to a
-remote storage of your choice.
+This repository provides a small bash script to encrypt files and folders and
+back them up to a remote storage of your choice.
 
 1. Create a compressed archive with [tar][tar].
 2. Encrypt the archive with [age][age].
-3. Copy the encrypted archive to one of many supported backend via [rclone][rclone].
+3. Copy the encrypted archive to one of many supported backend
+   via [rclone][rclone].
 
 ## Requirements
 
@@ -19,11 +20,13 @@ remote storage of your choice.
 
 ## Installation
 
-The script, as well as a systemd [service][systemd.service] and [timer][systemd.timer], can be
-installed with the provided `Makefile` to `/usr/local/{bin, etc, lib}`.
+The script, as well as a systemd [service][systemd.service] and
+[timer][systemd.timer], can be installed with the provided `Makefile`
+to `/usr/local/{bin, etc, lib}`.
 
 You may need root privileges to execute the `Makefile`.
-As with everything coming from the internet, please review the files before executing anything!
+As with everything coming from the internet, please review the files before
+executing anything!
 
 ```sh
 git clone https://github.com/lukasdietrich/aerback
@@ -41,15 +44,16 @@ Configuration File                      | Description
 `/usr/local/etc/aerback/recipients.txt` | Newline separated list of [public keys][age.recipients] used for encryption. 
 `/usr/local/etc/aerback/remote.txt`     | A single line containing the name of the rclone remote.
 
-If you want to modify the systemd [timer][systemd.timer] or [service][systemd.service], you can add
+If you want to modify the systemd [timer][systemd.timer]
+or [service][systemd.service], you can add
 a drop-in via `systemctl edit aerback.service` or `systemctl edit aerback.timer`.
 
 ### Run as a different user
 
-You may want to run the backups as a user other than root. For security reasons or for rclone to
-find your personal `rclone.conf`.
+You may want to run the backups as a user other than root.
+For security reasons or for rclone to find your personal `rclone.conf`.
 
-```
+```sh
 systemctl edit aerback.service
 
 # [Service]
@@ -61,7 +65,7 @@ systemctl edit aerback.service
 The timer defaults to weekly execution on saturday at 00:00 local time.
 If you prefer a different time, you need to override the `OnCalendar` attribute.
 
-```
+```sh
 systemctl edit aerback.timer
 
 # [Timer]
