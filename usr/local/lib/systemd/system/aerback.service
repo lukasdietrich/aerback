@@ -1,0 +1,15 @@
+[Unit]
+Description=Encrypted Backups
+Documentation=https://github.com/lukasdietrich/aerback
+Wants=network.target local-fs.target
+After=network.target local-fs.target
+
+[Service]
+Type=oneshot
+Environment=AERBACK_FILES=/usr/local/etc/aerback/files.txt
+Environment=AERBACK_RECIPIENTS=/usr/local/etc/aerback/recipients.txt
+Environment=AERBACK_REMOTE=/usr/local/etc/aerback/remote.txt
+ExecStart=/usr/local/bin/aerback
+
+# Allow readonly access to everything, even as a regular user.
+AmbientCapabilities=CAP_DAC_READ_SEARCH

@@ -1,0 +1,13 @@
+[Unit]
+Description=Scheduled Encrypted Backups
+Documentation=https://github.com/lukasdietrich/aerback
+After=network.target local-fs.target
+
+[Timer]
+OnCalendar=SAT *-*-*
+Persistent=true
+AccuracySec=1m
+RandomizedDelaySec=30m
+
+[Install]
+WantedBy=timers.target

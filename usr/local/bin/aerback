@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o pipefail
+set -o nounset
+
+log() {
+  echo "$*" >&2
+}
+
+err() {
+  log "$@"
+  exit 1
+}
+
+# arguments:
+#   ...filename - one or more filename(s) to check for existence.
+check_files() {
+  for filename in "$@"; do
+    if ! test -f "${filename}" ; then
+      err "The file '${filename}' does not exist!"
+    fi
+  done
+}
+
+# arguments:
+#   remote - the rclone remote name (eg. "backup").
+#   path   - the path of a file or folder to backup.
+backup() {
+  src_path=$(realpath -s "$2")
+  rel_path=$(realpath -s --relative-to "/" "${src_path}")
+  dst_path="$1:${rel_path}.tar.gz.age"
+
+  check_files "${src_path}"
+
+  log "Backing up '${src_path}' to '${dst_path}'."
+
+  tar -C / -chz "${rel_path}" \
+    | age -R "${AERBACK_RECIPIENTS}" \
+    | rclone rcat "${remote}:${dst_path}"
+}
+
+# globals:
+#   AERBACK_FILES      - Filename of the files list (eg. "files.txt").
+#   AERBACK_RECIPIENTS - Filename of the age public keys (eg. "recipients.txt").
+#   AERBACK_REMOTE     - Filename of the rclone remote name (eg. "remote.txt").
+main() {
+  check_files "${AERBACK_FILES}" "${AERBACK_RECIPIENTS}" "${AERBACK_REMOTE}"
+
+  remote="$(< "${AERBACK_REMOTE}")"
+
+  if [[ -z ${remote} ]]; then
+  	  err "No remote configured!"
+  fi
+
+  while read path_line; do
+    backup ${remote} ${path_line}
+  done < "${AERBACK_FILES}"
+
+  log "End of files list reached."
+}
+
+main "$@"

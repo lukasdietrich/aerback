@@ -1,0 +1,10 @@
+*
+!*/
+
+!.gitignore
+!README.md
+!LICENSE
+
+!/usr/local/bin/aerback
+!/usr/local/etc/aerback/*.txt
+!/usr/local/lib/systemd/system/aerback.*
