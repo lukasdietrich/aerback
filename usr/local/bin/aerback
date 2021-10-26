@@ -39,7 +39,7 @@ check_file_or_folder() {
 backup() {
   src_path=$(realpath -s "$2")
   rel_path=$(realpath -s --relative-to "/" "${src_path}")
-  dst_path="$1:${rel_path}.tar.gz.age"
+  dst_path="$1:${src_path}.tar.gz.age"
 
   check_file_or_folder "${src_path}"
 
