@@ -12,7 +12,7 @@ install: install-script install-config install-systemd
 
 install-script:
 	install -d $(DST_BIN)
-	install -b -m 0744 -t $(DST_BIN) $(SRC_BIN)
+	install -b -m 0755 -t $(DST_BIN) $(SRC_BIN)
 
 install-config:
 	install -d $(DST_ETC)
