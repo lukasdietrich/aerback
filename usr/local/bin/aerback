@@ -48,7 +48,7 @@ backup() {
 
   log "Backing up '${src_path}' to '${dst_path}'."
 
-  tar -C / -chz "${rel_path}" \
+  tar -C "/" -chz "${rel_path}" \
     | age -R "${AERBACK_RECIPIENTS}" \
     | rclone rcat "${dst_path}"
 }
@@ -62,12 +62,12 @@ main() {
 
   remote="$(< "${AERBACK_REMOTE}")"
 
-  if [[ -z ${remote} ]]; then
+  if [[ -z "${remote}" ]]; then
     err "No remote configured!"
   fi
 
   while read path_line; do
-    backup ${remote} ${path_line}
+    backup "${remote}" "${path_line}"
   done < "${AERBACK_FILES}"
 
   log "End of files list reached."
