@@ -4,6 +4,7 @@
 !.gitignore
 !README.md
 !LICENSE
+!Makefile
 
 !/usr/local/bin/aerback
 !/usr/local/etc/aerback/*.txt
