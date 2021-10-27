@@ -14,21 +14,27 @@ err() {
 }
 
 # arguments:
-#   ...filename - one or more filename(s) to check for existence.
-check_files() {
+#   ...filename - List of paths to check for existence.
+#                 Must point to a file or a symlink to file.
+exists_file() {
   for filename in "$@"; do
-    if ! test -f "${filename}" ; then
-      err "The file '${filename}' does not exist!"
+    abs_filename="$(realpath "${filename}")"
+
+    if ! test -f "${abs_filename}" ; then
+      err "'${filename}' does not exist or is not a file!"
     fi
   done
 }
 
 # arguments:
-#   ...filename - one or more name(s) of a file or a folder to check for existence.
-check_file_or_folder() {
+#   ...filename - List of paths to check for existence.
+#                 Must point to a file, folder or a symlink to one of those.
+exists_file_or_folder() {
   for filename in "$@"; do
-    if ! test -f "${filename}" -o -d "${filename}" ; then
-      err "The file or folder '${filename}' does not exist!"
+    abs_filename="$(realpath "${filename}")"
+
+    if ! test -f "${abs_filename}" -o -d "${abs_filename}" ; then
+      err "'${filename}' does not exist or is not a file or folder!"
     fi
   done
 }
@@ -37,14 +43,14 @@ check_file_or_folder() {
 #   AERBACK_RECIPIENTS - Filename of the age public keys (eg. "recipients.txt").
 # 
 # arguments:
-#   remote - the rclone remote name (eg. "backup").
-#   path   - the path of a file or folder to backup.
+#   remote - The rclone remote name (eg. "backup").
+#   path   - The path of a file or folder to backup.
 backup() {
-  src_path=$(realpath -s "$2")
-  rel_path=$(realpath -s --relative-to "/" "${src_path}")
-  dst_path="$1:${src_path}.tar.gz.age"
+  src_path="$(realpath -s "$2")"
+  rel_path="$(realpath -s --relative-to "/" "${src_path}")"
+  dst_path="$1:${rel_path}.tar.gz.age"
 
-  check_file_or_folder "${src_path}"
+  exists_file_or_folder "${src_path}"
 
   log "Backing up '${src_path}' to '${dst_path}'."
 
@@ -58,7 +64,7 @@ backup() {
 #   AERBACK_RECIPIENTS - Filename of the age public keys (eg. "recipients.txt").
 #   AERBACK_REMOTE     - Filename of the rclone remote name (eg. "remote.txt").
 main() {
-  check_files "${AERBACK_FILES}" "${AERBACK_RECIPIENTS}" "${AERBACK_REMOTE}"
+  exists_file "${AERBACK_FILES}" "${AERBACK_RECIPIENTS}" "${AERBACK_REMOTE}"
 
   remote="$(< "${AERBACK_REMOTE}")"
 
