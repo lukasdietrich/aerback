@@ -5,7 +5,7 @@ back them up to a remote storage of your choice.
 
 1. Create a compressed archive with [tar][tar].
 2. Encrypt the archive with [age][age].
-3. Copy the encrypted archive to one of many supported backend
+3. Copy the encrypted archive to one of many supported backends
    via [rclone][rclone].
 
 ## Requirements
@@ -32,6 +32,22 @@ executing anything!
 git clone https://github.com/lukasdietrich/aerback
 cd aerback/
 sudo make install
+```
+
+If you want to update, but not override the configuration, you can install only
+the script and systemd units.
+
+```sh
+git pull
+sudo make update
+```
+
+The `Makefile` creates backups when overriding files. If you wish to change
+that, you can set the `BACKUP` variable.
+See the documentation of [install][install] for further details.
+
+```sh
+sudo make update BACKUP=none
 ```
 
 ## Configuration
@@ -81,3 +97,4 @@ systemctl edit aerback.timer
 [systemd.timer]: https://manpages.ubuntu.com/manpages/bionic/man5/systemd.timer.5.html
 [systemd.service]: https://manpages.ubuntu.com/manpages/bionic/man5/systemd.service.5.html
 [make]: https://manpages.ubuntu.com/manpages/bionic/man1/make.1.html
+[install]: https://manpages.ubuntu.com/manpages/bionic/man1/install.1.html
