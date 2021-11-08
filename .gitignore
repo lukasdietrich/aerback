@@ -9,4 +9,4 @@
 
 !/usr/local/bin/aerback
 !/usr/local/etc/aerback/*.txt
-!/usr/local/lib/systemd/system/aerback.*
+!/etc/systemd/system/aerback.*

@@ -21,8 +21,7 @@ back them up to a remote storage of your choice.
 ## Installation
 
 The script, as well as a systemd [service][systemd.service] and
-[timer][systemd.timer], can be installed with the provided `Makefile`
-to `/usr/local/{bin, etc, lib}`.
+[timer][systemd.timer], can be installed with the provided `Makefile`.
 
 You may need root privileges to execute the `Makefile`.
 As with everything coming from the internet, please review the files before
